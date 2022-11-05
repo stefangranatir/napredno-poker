@@ -1,0 +1,101 @@
+using System.Collections.Generic;
+using System.Security.AccessControl;
+
+internal class Program
+{
+class igrac
+    {
+        public string IP = "";
+        public List<string> Karte = new List<string>();
+        public igrac(string a)
+        {
+            IP = a;
+        }
+    }
+
+    class igra
+    {
+        private static Random rng = new Random();
+        List<string> kartice = new List<string>();
+        List<igrac> igraci = new List<igrac>();
+
+        public void dodajIgrace(string a)
+        {
+            igraci.Add(new igrac(a));
+        }
+        public void daj4(string i)
+        {
+            foreach(igrac g in igraci)
+            {
+                if (g.IP == i)
+                {
+                    g.Karte.Add(kartice[0]);
+                    g.Karte.Add(kartice[1]);
+                    g.Karte.Add(kartice[2]);
+                    g.Karte.Add(kartice[3]);
+                    kartice.RemoveAt(0);
+                    kartice.RemoveAt(0);
+                    kartice.RemoveAt(0);
+                    kartice.RemoveAt(0);
+                    break;
+                }
+            }
+        }
+        public void ispisTest()
+        {
+            foreach(igrac i in igraci)
+            {
+                Console.Write(i.IP);
+                foreach(string s in i.Karte) { 
+                    Console.Write(s);
+                    Console.Write(' ');
+                }
+                Console.WriteLine();
+            }
+        }
+        public void dodajKarte(string a) 
+        {
+            kartice.Add(a); 
+        }
+        public void shuffle()
+        {
+            int n=kartice.Count;
+            while (n > 1)
+            {
+                string a;
+                n--;
+                int k=rng.Next(n+1);
+                a=kartice[k];
+                kartice[k]=kartice[n];
+                kartice[n] = a;
+            }
+        }
+        public void ispisKarte()
+        {
+            foreach(string a in kartice)
+            {
+                Console.WriteLine(a);
+            }
+        }
+    }
+    private static void Main(string[] args)
+    {
+        igra poker=new igra();
+        poker.dodajIgrace("Stefan");
+        poker.dodajIgrace("Milos");
+        poker.dodajIgrace("Zoran");
+        poker.dodajIgrace("Obama");
+        for(int i = 1; i <= 12; i++)
+        {
+            poker.dodajKarte(i.ToString());
+        }
+        //poker.ispisKarte();
+        poker.shuffle();
+        poker.ispisKarte();
+        //poker.ispisTest();
+        poker.daj4("Stefan");
+        poker.daj4("Obama");
+        poker.ispisTest();
+        poker.ispisKarte();
+   }
+}
